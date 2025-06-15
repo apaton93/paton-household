@@ -1,0 +1,19 @@
+body {
+  font-family: sans-serif;
+  padding: 1rem;
+}
+
+input {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  display: block;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}

@@ -1,31 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>HTML 5 Boilerplate</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chore List</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="auth-section">
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button id="login-btn">Login</button>
+    <p id="auth-message"></p>
+  </div>
 
-    <header>
+  <div id="app-section" style="display: none;">
+    <h2>Chores</h2>
+    <ul id="chore-list"></ul>
 
-    </header>
-    
-    
-    
-    <main>
+    <input type="text" id="new-chore" placeholder="New chore..." />
+    <button id="add-btn">Add Chore</button>
+    <button id="logout-btn">Logout</button>
+  </div>
 
-    </main>
-
-
-
-    <footer>
-
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <script src="app.js"></script>
-  </body>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="app.js"></script>
+</body>
 </html>
