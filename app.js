@@ -16,6 +16,15 @@ const authSection = document.getElementById('auth-section');
 const appSection = document.getElementById('app-section');
 const authMessage = document.getElementById('auth-message');
 
+const shoppingSection = document.getElementById('shopping-section');
+const shoppingList = document.getElementById('shopping-list');
+const newItemInput = document.getElementById('new-item');
+const addItemBtn = document.getElementById('add-item-btn');
+
+const navChores = document.getElementById('nav-chores');
+const navShopping = document.getElementById('nav-shopping');
+
+
 // Login
 loginBtn.addEventListener('click', async () => {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -51,6 +60,21 @@ async function loadChores() {
     alert('Error loading chores');
     return;
   }
+
+  function showChores() {
+  appSection.style.display = 'block';
+  shoppingSection.style.display = 'none';
+  navChores.classList.add('active');
+  navShopping.classList.remove('active');
+}
+
+function showShopping() {
+  appSection.style.display = 'none';
+  shoppingSection.style.display = 'block';
+  navChores.classList.remove('active');
+  navShopping.classList.add('active');
+}
+
 
   // Show app
   authSection.style.display = 'none';
@@ -94,4 +118,20 @@ supabase.auth.getSession().then(({ data }) => {
   if (data.session) {
     loadChores();
   }
+});
+
+
+navChores.addEventListener('click', showChores);
+navShopping.addEventListener('click', showShopping);
+
+
+addItemBtn.addEventListener('click', () => {
+  const item = newItemInput.value.trim();
+  if (!item) return;
+
+  const li = document.createElement('li');
+  li.textContent = item;
+  shoppingList.appendChild(li);
+
+  newItemInput.value = '';
 });
