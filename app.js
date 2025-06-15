@@ -25,6 +25,21 @@ const navChores = document.getElementById('nav-chores');
 const navShopping = document.getElementById('nav-shopping');
 
 
+  function showChores() {
+  appSection.style.display = 'block';
+  shoppingSection.style.display = 'none';
+  navChores.classList.add('active');
+  navShopping.classList.remove('active');
+}
+
+function showShopping() {
+  appSection.style.display = 'none';
+  shoppingSection.style.display = 'block';
+  navChores.classList.remove('active');
+  navShopping.classList.add('active');
+}
+
+
 // Login
 loginBtn.addEventListener('click', async () => {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -63,19 +78,7 @@ async function loadChores() {
     return;
   }
 
-  function showChores() {
-  appSection.style.display = 'block';
-  shoppingSection.style.display = 'none';
-  navChores.classList.add('active');
-  navShopping.classList.remove('active');
-}
 
-function showShopping() {
-  appSection.style.display = 'none';
-  shoppingSection.style.display = 'block';
-  navChores.classList.remove('active');
-  navShopping.classList.add('active');
-}
 
 
 
