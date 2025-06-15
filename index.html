@@ -8,6 +8,16 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 <body>
+
+    <header id="app-header" style="display: none;">
+        <div class="header-left">
+            <img src="user-icon.png" alt="User" class="user-icon" />
+            <span id="user-email"></span>
+        </div>
+        <button id="logout-btn">Logout</button>
+    </header>
+
+
   <div id="auth-section">
     <h2>Login</h2>
     <input type="email" id="email" placeholder="Email" />
@@ -22,7 +32,6 @@
 
     <input type="text" id="new-chore" placeholder="New chore..." />
     <button id="add-btn">Add Chore</button>
-    <button id="logout-btn">Logout</button>
   </div>
   
   <div id="shopping-section" style="display: none;">

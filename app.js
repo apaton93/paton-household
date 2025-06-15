@@ -61,6 +61,7 @@ logoutBtn.addEventListener('click', async () => {
   await supabase.auth.signOut();
   authSection.style.display = 'block';
   appSection.style.display = 'none';
+  document.getElementById('app-header').style.display = 'none';
 });
 
 // Load chores
@@ -70,6 +71,9 @@ async function loadChores() {
   } = await supabase.auth.getUser();
 
   if (!user) return;
+
+  document.getElementById('app-header').style.display = 'flex';
+document.getElementById('user-email').textContent = user.email;
 
   const { data: chores, error } = await supabase.from('chores').select('*').order('inserted_at', { ascending: true });
 
