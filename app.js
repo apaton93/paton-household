@@ -36,7 +36,9 @@ loginBtn.addEventListener('click', async () => {
     authMessage.textContent = error.message;
   } else {
     loadChores();
-  }
+    loadShoppingItems();
+    showChores();
+    }
 });
 
 // Logout
@@ -76,6 +78,10 @@ function showShopping() {
 }
 
 
+
+
+
+
   // Show app
   authSection.style.display = 'none';
   appSection.style.display = 'block';
@@ -107,18 +113,77 @@ addBtn.addEventListener('click', async () => {
   loadChores();
 });
 
+
+
+async function loadShoppingItems() {
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) return;
+
+  const { data: items, error } = await supabase
+    .from('shopping_items')
+    .select('*')
+    .order('inserted_at', { ascending: true });
+
+  if (error) {
+    alert('Error loading shopping items');
+    return;
+  }
+
+  shoppingList.innerHTML = '';
+  items.forEach((item) => {
+    const li = document.createElement('li');
+    li.textContent = item.completed ? `✅ ${item.item}` : item.item;
+    li.style.cursor = 'pointer';
+    li.addEventListener('click', () =>
+      toggleShoppingComplete(item.id, !item.completed)
+    );
+    shoppingList.appendChild(li);
+  });
+}
+
+
+addItemBtn.addEventListener('click', async () => {
+  const item = newItemInput.value.trim();
+  if (!item) return;
+
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  await supabase.from('shopping_items').insert([
+    { item: item, user_id: user.id, completed: false }
+  ]);
+
+  newItemInput.value = '';
+  loadShoppingItems();
+});
+
+
+
+async function toggleShoppingComplete(id, completed) {
+  await supabase
+    .from('shopping_items')
+    .update({ completed })
+    .eq('id', id);
+  loadShoppingItems();
+}
+
+
+
+
+
+
 // Toggle completed
 async function toggleComplete(id, completed) {
   await supabase.from('chores').update({ completed }).eq('id', id);
   loadChores();
 }
 
-// Auto-login if session exists
-supabase.auth.getSession().then(({ data }) => {
-  if (data.session) {
-    loadChores();
-  }
-});
+
+
 
 
 navChores.addEventListener('click', showChores);
@@ -134,4 +199,16 @@ addItemBtn.addEventListener('click', () => {
   shoppingList.appendChild(li);
 
   newItemInput.value = '';
+});
+
+
+
+
+// Auto-login if session exists
+supabase.auth.getSession().then(({ data }) => {
+  if (data.session) {
+    loadChores();
+    loadShoppingItems();
+    showChores();
+  }
 });
