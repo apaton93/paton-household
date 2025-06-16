@@ -53,12 +53,23 @@ body {
   background-color: #e04e4e;
 }
 
+h1 {
+  text-align: center;
+  color: #0f5a69;
+  margin-bottom: 100px;
+}
 
-#auth-section,
+#auth-section {
+  flex: 1;
+  padding: 4rem;
+  height: 100%;
+  width: calc(100% - 8rem);
+}
+
 #app-section,
 #shopping-section {
   flex: 1;
-  padding: 4rem;
+  padding: 0.8rem;
   height: 100%;
   width: calc(100% - 8rem);
   overflow-y: auto;

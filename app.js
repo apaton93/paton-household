@@ -6,6 +6,8 @@ const supabase = window.supabase.createClient(
 
 // Elements
 const authSection = document.getElementById('auth-section');
+const usersName = document.getElementById('user-name');
+
 const loginBtn = document.getElementById('login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const addBtn = document.getElementById('add-btn');
@@ -64,7 +66,7 @@ loginBtn.addEventListener('click', async () => {
         .single();
 
       if (!error) {
-        document.getElementById('user-name').textContent = profile.forename;
+        usersName.textContent = profile.forename;
       }
 
       loadChores();
@@ -87,6 +89,7 @@ logoutBtn.addEventListener('click', async () => {
   appSection.style.display = 'none';
   footerNav.style.display = 'none';
   logoutBtn.style.display = 'none';
+  usersName.textContent = '';
 });
 
 // Load chores
