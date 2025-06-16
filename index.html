@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <header id="app-header" style="display: none;">
+    <header id="app-header">
         <div class="header-left">
             <img src="user-icon.png" alt="User" class="user-icon" />
             <span id="user-email"></span>
@@ -18,38 +18,38 @@
     </header>
 
 
-  <div id="auth-section">
-    <h2>Login</h2>
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Password" />
-    <button id="login-btn">Login</button>
-    <p id="auth-message"></p>
-  </div>
+    <div id="auth-section">
+      <h2>Login</h2>
+      <input type="email" id="email" placeholder="Email" />
+      <input type="password" id="password" placeholder="Password" />
+      <button id="login-btn">Login</button>
+      <p id="auth-message"></p>
+    </div>
 
-  <div id="app-section" style="display: none;">
-    <h2>Chores</h2>
-    <ul id="chore-list"></ul>
+    <div id="app-section" style="display: none;">
+      <h2>Chores</h2>
+      <ul id="chore-list"></ul>
 
-    <input type="text" id="new-chore" placeholder="New chore..." />
-    <button id="add-btn">Add Chore</button>
-  </div>
+      <input type="text" id="new-chore" placeholder="New chore..." />
+      <button id="add-btn">Add Chore</button>
+    </div>
   
-  <div id="shopping-section" style="display: none;">
-    <h2>Shopping List</h2>
-    <ul id="shopping-list"></ul>
+    <div id="shopping-section" style="display: none;">
+      <h2>Shopping List</h2>
+      <ul id="shopping-list"></ul>
 
-    <input type="text" id="new-item" placeholder="New item..." />
-    <button id="add-item-btn">Add Item</button>
+      <input type="text" id="new-item" placeholder="New item..." />
+      <button id="add-item-btn">Add Item</button>
     </div>
 
 
-    <footer class="footer-nav">
-    <button id="nav-chores" class="nav-btn active">
-        🧹<br /><span>Chores</span>
-    </button>
-    <button id="nav-shopping" class="nav-btn">
-        🛒<br /><span>Shopping</span>
-    </button>
+    <footer id="footer-nav" style="display: none;">
+      <button id="nav-chores" class="nav-btn active">
+          🧹<br /><span>Chores</span>
+      </button>
+      <button id="nav-shopping" class="nav-btn">
+          🛒<br /><span>Shopping</span>
+      </button>
     </footer>
   
   <script src="app.js" defer></script>

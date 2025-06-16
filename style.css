@@ -51,7 +51,7 @@ body {
 }
 
 /* Footer nav */
-.footer-nav {
+#footer-nav {
   display: flex;
   justify-content: space-around;
   background: #f0f0f0;

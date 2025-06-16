@@ -10,6 +10,7 @@ const logoutBtn = document.getElementById('logout-btn');
 const addBtn = document.getElementById('add-btn');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
+
 const choreInput = document.getElementById('new-chore');
 const choreList = document.getElementById('chore-list');
 const authSection = document.getElementById('auth-section');
@@ -21,47 +22,72 @@ const shoppingList = document.getElementById('shopping-list');
 const newItemInput = document.getElementById('new-item');
 const addItemBtn = document.getElementById('add-item-btn');
 
+const footerNav = document.getElementById('footer-nav');
 const navChores = document.getElementById('nav-chores');
 const navShopping = document.getElementById('nav-shopping');
 
 
   function showChores() {
-  appSection.style.display = 'block';
-  shoppingSection.style.display = 'none';
-  navChores.classList.add('active');
-  navShopping.classList.remove('active');
-}
+    appSection.style.display = 'block';
+    shoppingSection.style.display = 'none';
+    navChores.classList.add('active');
+    navShopping.classList.remove('active');
+  }
 
-function showShopping() {
-  appSection.style.display = 'none';
-  shoppingSection.style.display = 'block';
-  navChores.classList.remove('active');
-  navShopping.classList.add('active');
-}
+  function showShopping() {
+    appSection.style.display = 'none';
+    shoppingSection.style.display = 'block';
+    navChores.classList.remove('active');
+    navShopping.classList.add('active');
+  }
 
 
 // Login
 loginBtn.addEventListener('click', async () => {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: emailInput.value,
-    password: passwordInput.value
-  });
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: emailInput.value,
+      password: passwordInput.value
+    });
 
-  if (error) {
-    authMessage.textContent = error.message;
-  } else {
-    loadChores();
-    loadShoppingItems();
-    showChores();
+    if (error) {
+      authMessage.textContent = error.message;
+    } else {
+      //read user's names
+      const {
+        data: { user }
+      } = await supabase.auth.getUser();
+
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .select('forename, surname')
+        .eq('id', user.id)
+        .single();
+
+      if (!error) {
+        const fullName = `${profile.forename} ${profile.surname}`;
+        console.log(fullName);
+      }
+
+      loadChores();
+      loadShoppingItems();
+      showChores();
+      footerNav.style.display = 'flex';
+      logoutBtn.style.display = 'block';
     }
 });
+
+
+
+
+
 
 // Logout
 logoutBtn.addEventListener('click', async () => {
   await supabase.auth.signOut();
   authSection.style.display = 'block';
   appSection.style.display = 'none';
-  document.getElementById('app-header').style.display = 'none';
+  footerNav.style.display = 'none';
+  logoutBtn.style.display = 'none';
 });
 
 // Load chores
@@ -72,8 +98,7 @@ async function loadChores() {
 
   if (!user) return;
 
-  document.getElementById('app-header').style.display = 'flex';
-document.getElementById('user-email').textContent = user.email;
+  document.getElementById('user-email').textContent = user.email;
 
   const { data: chores, error } = await supabase.from('chores').select('*').order('inserted_at', { ascending: true });
 
@@ -81,13 +106,6 @@ document.getElementById('user-email').textContent = user.email;
     alert('Error loading chores');
     return;
   }
-
-
-
-
-
-
-
 
   // Show app
   authSection.style.display = 'none';
@@ -192,7 +210,7 @@ async function toggleComplete(id, completed) {
 
 
 
-
+//Event listeners
 navChores.addEventListener('click', showChores);
 navShopping.addEventListener('click', showShopping);
 
