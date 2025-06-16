@@ -1,3 +1,14 @@
+
+:root {
+  --headerColour: #D5D6AA;
+  --buttonColour: #188FA7;
+  --buttonColourHover: #769FB6;
+  --logoutButtonColour: #ff5555;
+  --logoutButtonColourHover: #e04e4e;
+
+  --navBarActive: #9DBBAE;
+}
+
 /* General layout */
 body {
   margin: 0;
@@ -44,10 +55,18 @@ body {
 
 
 #auth-section,
-#app-section {
+#app-section,
+#shopping-section {
   flex: 1;
-  padding: 1rem;
+  padding: 4rem;
+  height: 100%;
+  width: calc(100% - 8rem);
   overflow-y: auto;
+}
+
+#login-btn {
+  width: 100%;
+  margin-top: 1.2rem;
 }
 
 /* Footer nav */
@@ -78,7 +97,7 @@ body {
 }
 
 .nav-btn.active {
-  color: #008d07;
+  color: var(--navBarActive);
   font-weight: bold;
 }
 
@@ -102,25 +121,24 @@ input[type="text"] {
   display: block;
   width: 100%;
   padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
+  margin-top: 1.2rem;
+  font-size: 1.2rem;
   box-sizing: border-box;
 }
 
 button {
   display: inline-block;
   padding: 0.5rem 1rem;
-  font-size: 1rem;
-  background-color: #008d07;
+  font-size: 1.2rem;
+  background-color: var(--buttonColour);
   color: white;
   border: none;
   border-radius: 5px;
-  margin-right: 0.5rem;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #007006;
+  background-color: var(--buttonColourHover);
 }
 
 #auth-message {

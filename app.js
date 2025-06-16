@@ -5,6 +5,7 @@ const supabase = window.supabase.createClient(
 );
 
 // Elements
+const authSection = document.getElementById('auth-section');
 const loginBtn = document.getElementById('login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const addBtn = document.getElementById('add-btn');
@@ -13,7 +14,6 @@ const passwordInput = document.getElementById('password');
 
 const choreInput = document.getElementById('new-chore');
 const choreList = document.getElementById('chore-list');
-const authSection = document.getElementById('auth-section');
 const appSection = document.getElementById('app-section');
 const authMessage = document.getElementById('auth-message');
 
@@ -59,13 +59,12 @@ loginBtn.addEventListener('click', async () => {
 
       const { data: profile, error } = await supabase
         .from('profiles')
-        .select('forename, surname')
+        .select('forename, surname, nickname')
         .eq('id', user.id)
         .single();
 
       if (!error) {
-        const fullName = `${profile.forename} ${profile.surname}`;
-        console.log(fullName);
+        document.getElementById('user-name').textContent = profile.forename;
       }
 
       loadChores();
@@ -97,8 +96,6 @@ async function loadChores() {
   } = await supabase.auth.getUser();
 
   if (!user) return;
-
-  document.getElementById('user-email').textContent = user.email;
 
   const { data: chores, error } = await supabase.from('chores').select('*').order('inserted_at', { ascending: true });
 
