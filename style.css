@@ -135,6 +135,26 @@ h1 {
   width: 5%;
 }
 
+.create-chore {
+  width: 100%;
+  height: 5%;
+  display: flex;
+  padding-top: 10px;
+}
+
+#new-chore {
+  width: 90%;
+}
+
+#add-chore {
+  width: 10%;
+  font-size: 1.7rem;
+  text-align: center;
+  color:#0f5a69;
+  border: solid 1px var(--buttonColourHover);
+  border-radius: 10px;
+}
+
 /* Input fields */
 input[type="email"],
 input[type="password"],
@@ -142,9 +162,10 @@ input[type="text"] {
   display: block;
   width: 100%;
   padding: 0.5rem;
-  margin-top: 1.2rem;
   font-size: 1.2rem;
   box-sizing: border-box;
+  border: solid 1px var(--buttonColourHover);
+  border-radius: 10px;
 }
 
 button {

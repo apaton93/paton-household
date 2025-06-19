@@ -10,7 +10,7 @@ const usersName = document.getElementById('user-name');
 
 const loginBtn = document.getElementById('login-btn');
 const logoutBtn = document.getElementById('logout-btn');
-const addBtn = document.getElementById('add-btn');
+const addBtn = document.getElementById('add-chore');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 
