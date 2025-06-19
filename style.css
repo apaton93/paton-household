@@ -71,7 +71,7 @@ h1 {
   flex: 1;
   padding: 0.8rem;
   height: 100%;
-  width: calc(100% - 8rem);
+  width: calc(100% - 1.6rem);
   overflow-y: auto;
 }
 
@@ -97,7 +97,7 @@ h1 {
   background: none;
   border: none;
   font-size: 1.2rem;
-  color: #333;
+  color: #000000;
   text-align: center;
   padding: 0.3rem 0;
 }
@@ -108,7 +108,8 @@ h1 {
 }
 
 .nav-btn.active {
-  color: var(--navBarActive);
+  background-color: var(--buttonColourHover);
+  color: #000000;
   font-weight: bold;
 }
 
@@ -123,6 +124,15 @@ h1 {
   margin-bottom: 0.5rem;
   padding: 0.5rem;
   border-radius: 6px;
+  display: flex;
+}
+
+.chore-text {
+  width: 95%;
+}
+
+.chore-delete {
+  width: 5%;
 }
 
 /* Input fields */

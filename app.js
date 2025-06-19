@@ -113,12 +113,27 @@ async function loadChores() {
 
   choreList.innerHTML = '';
   chores.forEach((chore) => {
-    const li = document.createElement('li');
-    li.textContent = chore.completed ? `✅ ${chore.item}` : chore.item;
-    li.style.cursor = 'pointer';
-    li.addEventListener('click', () => toggleComplete(chore.id, !chore.completed));
-    choreList.appendChild(li);
+    createChoreItem(chore);
   });
+}
+
+function createChoreItem(chore) {
+  const li = document.createElement('li');
+  const div = document.createElement('div');
+    div.setAttribute('class', 'chore-text')
+    div.textContent = chore.completed ? `✅ ${chore.item}` : chore.item;
+    div.style.cursor = 'pointer';
+    div.addEventListener('click', () => toggleComplete(chore.id, !chore.completed));
+
+  const bt = document.createElement('div');
+    bt.setAttribute('class', 'chore-delete')
+    bt.textContent = '❌';
+    bt.style.cursor = 'pointer';
+    bt.addEventListener('click', () => deleteChore(chore.id));
+
+  li.append(div);
+  li.append(bt);
+  choreList.appendChild(li);
 }
 
 // Add chore
@@ -138,6 +153,20 @@ addBtn.addEventListener('click', async () => {
   loadChores();
 });
 
+// Delete chore
+async function deleteChore(id) {
+  await supabase
+  .from('chores')
+  .delete()
+  .eq('id', id)
+  loadChores();
+}
+
+// Toggle completed
+async function toggleComplete(id, completed) {
+  await supabase.from('chores').update({ completed }).eq('id', id);
+  loadChores();
+}
 
 
 async function loadShoppingItems() {
