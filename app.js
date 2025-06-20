@@ -6,42 +6,53 @@ const supabase = window.supabase.createClient(
 
 // Elements
 const authSection = document.getElementById('auth-section');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
 const usersName = document.getElementById('user-name');
+const authMessage = document.getElementById('auth-message');
 
 const loginBtn = document.getElementById('login-btn');
 const logoutBtn = document.getElementById('logout-btn');
-const addBtn = document.getElementById('add-chore');
-const emailInput = document.getElementById('email');
-const passwordInput = document.getElementById('password');
 
+const addChore = document.getElementById('add-chore');
 const choreInput = document.getElementById('new-chore');
 const choreList = document.getElementById('chore-list');
-const appSection = document.getElementById('app-section');
-const authMessage = document.getElementById('auth-message');
+const choreSection = document.getElementById('chore-section');
+
 
 const shoppingSection = document.getElementById('shopping-section');
 const shoppingList = document.getElementById('shopping-list');
 const newItemInput = document.getElementById('new-item');
-const addItemBtn = document.getElementById('add-item-btn');
+const addShoppingItem = document.getElementById('add-shopping-item');
 
 const footerNav = document.getElementById('footer-nav');
 const navChores = document.getElementById('nav-chores');
 const navShopping = document.getElementById('nav-shopping');
 
+  function hideApps() {
+    shoppingSection.style.display = 'none';
+    navShopping.classList.remove('active');
+
+    choreSection.style.display = 'none';
+    navChores.classList.remove('active');
+  }
+
 
   function showChores() {
-    appSection.style.display = 'block';
-    shoppingSection.style.display = 'none';
+    hideApps();
+    loadChores();
+    choreSection.style.display = 'block';
     navChores.classList.add('active');
-    navShopping.classList.remove('active');
   }
 
   function showShopping() {
-    appSection.style.display = 'none';
+    hideApps();
+    loadShoppingItems();
     shoppingSection.style.display = 'block';
-    navChores.classList.remove('active');
     navShopping.classList.add('active');
   }
+
+
 
 
 // Login
@@ -77,16 +88,11 @@ loginBtn.addEventListener('click', async () => {
     }
 });
 
-
-
-
-
-
 // Logout
 logoutBtn.addEventListener('click', async () => {
   await supabase.auth.signOut();
   authSection.style.display = 'block';
-  appSection.style.display = 'none';
+  choreSection.style.display = 'none';
   footerNav.style.display = 'none';
   logoutBtn.style.display = 'none';
   usersName.textContent = '';
@@ -109,7 +115,7 @@ async function loadChores() {
 
   // Show app
   authSection.style.display = 'none';
-  appSection.style.display = 'block';
+  choreSection.style.display = 'block';
 
   choreList.innerHTML = '';
   chores.forEach((chore) => {
@@ -123,7 +129,7 @@ function createChoreItem(chore) {
     div.setAttribute('class', 'chore-text')
     div.textContent = chore.completed ? `✅ ${chore.item}` : chore.item;
     div.style.cursor = 'pointer';
-    div.addEventListener('click', () => toggleComplete(chore.id, !chore.completed));
+    div.addEventListener('click', () => toggleChoreComplete(chore.id, !chore.completed));
 
   const bt = document.createElement('div');
     bt.setAttribute('class', 'chore-delete')
@@ -137,7 +143,7 @@ function createChoreItem(chore) {
 }
 
 // Add chore
-addBtn.addEventListener('click', async () => {
+addChore.addEventListener('click', async () => {
   const item = choreInput.value.trim();
   if (!item) return;
 
@@ -163,7 +169,7 @@ async function deleteChore(id) {
 }
 
 // Toggle completed
-async function toggleComplete(id, completed) {
+async function toggleChoreComplete(id, completed) {
   await supabase.from('chores').update({ completed }).eq('id', id);
   loadChores();
 }
@@ -188,18 +194,40 @@ async function loadShoppingItems() {
 
   shoppingList.innerHTML = '';
   items.forEach((item) => {
-    const li = document.createElement('li');
-    li.textContent = item.completed ? `✅ ${item.item}` : item.item;
-    li.style.cursor = 'pointer';
-    li.addEventListener('click', () =>
-      toggleShoppingComplete(item.id, !item.completed)
-    );
-    shoppingList.appendChild(li);
+    createShoppingItem(item);
   });
 }
 
+function createShoppingItem(item) {
+  const li = document.createElement('li');
+  const div = document.createElement('div');
+    div.setAttribute('class', 'shopping-item-text')
+    div.textContent = item.completed ? `✅ ${item.item}` : item.item;
+    div.style.cursor = 'pointer';
+    div.addEventListener('click', () => toggleShoppingComplete(item.id, !item.completed));
 
-addItemBtn.addEventListener('click', async () => {
+  const bt = document.createElement('div');
+    bt.setAttribute('class', 'shopping-item-delete')
+    bt.textContent = '❌';
+    bt.style.cursor = 'pointer';
+    bt.addEventListener('click', () => deleteShoppingItem(item.id));
+
+  li.append(div);
+  li.append(bt);
+  shoppingList.appendChild(li);
+}
+
+// Delete shopping item
+async function deleteShoppingItem(id) {
+  await supabase
+  .from('shopping_items')
+  .delete()
+  .eq('id', id)
+  loadShoppingItems();
+}
+
+
+addShoppingItem.addEventListener('click', async () => {
   const item = newItemInput.value.trim();
   if (!item) return;
 
@@ -226,25 +254,7 @@ async function toggleShoppingComplete(id, completed) {
 }
 
 
-
-
-
-
-// Toggle completed
-async function toggleComplete(id, completed) {
-  await supabase.from('chores').update({ completed }).eq('id', id);
-  loadChores();
-}
-
-
-
-
-//Event listeners
-navChores.addEventListener('click', showChores);
-navShopping.addEventListener('click', showShopping);
-
-
-addItemBtn.addEventListener('click', () => {
+addShoppingItem.addEventListener('click', () => {
   const item = newItemInput.value.trim();
   if (!item) return;
 
@@ -257,12 +267,21 @@ addItemBtn.addEventListener('click', () => {
 
 
 
+//Event listeners
+navChores.addEventListener('click', showChores);
+navShopping.addEventListener('click', showShopping);
+
 
 // Auto-login if session exists
 supabase.auth.getSession().then(({ data }) => {
   if (data.session) {
-    loadChores();
-    loadShoppingItems();
+    
     showChores();
   }
 });
+
+
+if (authSection.style.display == '') {
+  footerNav.style.display = 'flex';
+  logoutBtn.style.display = 'block';
+}
