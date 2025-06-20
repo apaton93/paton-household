@@ -1,4 +1,5 @@
 
+
 const supabase = window.supabase.createClient(
   'https://qwdwcsdgjhuthhrpijoz.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF3ZHdjc2Rnamh1dGhocnBpam96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAwMjIzNTEsImV4cCI6MjA2NTU5ODM1MX0.oh2bBUPY_YJQkFWPy06JSA_B-sXkg1h5t0DoK1eqnrQ'
@@ -19,10 +20,9 @@ const choreInput = document.getElementById('new-chore');
 const choreList = document.getElementById('chore-list');
 const choreSection = document.getElementById('chore-section');
 
-
 const shoppingSection = document.getElementById('shopping-section');
 const shoppingList = document.getElementById('shopping-list');
-const newItemInput = document.getElementById('new-item');
+const newItemInput = document.getElementById('new-shopping-item');
 const addShoppingItem = document.getElementById('add-shopping-item');
 
 const footerNav = document.getElementById('footer-nav');
@@ -37,6 +37,9 @@ const navShopping = document.getElementById('nav-shopping');
     navChores.classList.remove('active');
   }
 
+  function hideNav() {
+    footerNav.style.display = 'none';
+  }
 
   function showChores() {
     hideApps();
@@ -92,8 +95,7 @@ loginBtn.addEventListener('click', async () => {
 logoutBtn.addEventListener('click', async () => {
   await supabase.auth.signOut();
   authSection.style.display = 'block';
-  choreSection.style.display = 'none';
-  footerNav.style.display = 'none';
+  hideApps();
   logoutBtn.style.display = 'none';
   usersName.textContent = '';
 });
@@ -254,18 +256,6 @@ async function toggleShoppingComplete(id, completed) {
 }
 
 
-addShoppingItem.addEventListener('click', () => {
-  const item = newItemInput.value.trim();
-  if (!item) return;
-
-  const li = document.createElement('li');
-  li.textContent = item;
-  shoppingList.appendChild(li);
-
-  newItemInput.value = '';
-});
-
-
 
 //Event listeners
 navChores.addEventListener('click', showChores);
@@ -275,8 +265,11 @@ navShopping.addEventListener('click', showShopping);
 // Auto-login if session exists
 supabase.auth.getSession().then(({ data }) => {
   if (data.session) {
-    
     showChores();
+  } else {
+    hideApps();
+    hideNav();
+    logoutBtn.style.display = 'none';
   }
 });
 
