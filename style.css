@@ -50,7 +50,7 @@ body {
   background-color: var(--ultraPink);
   color: white;
   border: none;
-  padding: 0.5rem 0.75rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 4px;
   cursor: pointer;
 }
@@ -61,7 +61,7 @@ body {
 
 h1, h2 {
   text-align: center;
-  color: var(--ultraPink);
+  color: var(--salmon);
 }
 
 h1 {
