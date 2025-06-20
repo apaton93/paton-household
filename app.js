@@ -96,6 +96,7 @@ logoutBtn.addEventListener('click', async () => {
   await supabase.auth.signOut();
   authSection.style.display = 'block';
   hideApps();
+  hideNav();
   logoutBtn.style.display = 'none';
   usersName.textContent = '';
 });
