@@ -1,0 +1,15 @@
+{
+  "name": "Benvie Organiser",
+  "short_name": "Benvie",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#008d07",
+  "icons": [
+    {
+      "src": "/icons/apple-touch-icon.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ]
+}
