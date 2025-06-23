@@ -367,6 +367,16 @@ navChores.addEventListener('click', showChores);
 navShopping.addEventListener('click', showShopping);
 navWatch.addEventListener('click', showWatchList);
 
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('theme');
+
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark');
+  } else {
+    document.body.classList.remove('dark');
+  }
+});
+
 function toggleTheme() {
   if (toggleDarkMode.innerHTML == '⏾') {
     setDarkMode();
@@ -378,11 +388,13 @@ function toggleTheme() {
 function setDarkMode() {
   toggleDarkMode.innerHTML = '☀︎';
   document.body.classList.add('dark');
+  localStorage.setItem('theme', 'dark');
 }
 
 function setLightMode() {
   toggleDarkMode.innerHTML = '⏾';
   document.body.classList.remove('dark');
+  localStorage.setItem('theme', 'light');
 }
 
 // Auto-login if session exists
