@@ -127,7 +127,8 @@ input[type="password"]{
 
 
 #chore-section,
-#shopping-section {
+#shopping-section,
+#watch-section {
   flex: 1;
   padding: 0.8rem;
   height: 100%;
@@ -140,12 +141,12 @@ input[type="password"]{
 
 
 /*List styling */
-#chore-list, #shopping-list {
+#chore-list, #shopping-list, #watch-list {
   list-style: none;
   padding: 0;
 }
 
-#chore-list li, #shopping-list li {
+#chore-list li, #shopping-list li, #watch-list li {
   background: var(--mustard);
   margin-bottom: 0.5rem;
   padding: 0.5rem;
@@ -153,26 +154,26 @@ input[type="password"]{
   display: flex;
 }
 
-.chore-text, .shopping-item-text {
+.chore-text, .shopping-item-text, .watch-item-text {
   width: 95%;
 }
 
-.chore-delete.shopping-item-delete {
+.chore-delete, .shopping-item-delete, .watch-item-delete {
   width: 5%;
 }
 
-.create-chore, .create-shopping-item {
+.create-chore, .create-shopping-item, .create-watch-item {
   width: 100%;
   height: 5%;
   display: flex;
   padding-top: 10px;
 }
 
-#new-chore, #new-shopping-item {
+#new-chore, #new-shopping-item, #new-watch-item {
   width: 90%;
 }
 
-#add-chore, #add-shopping-item {
+#add-chore, #add-shopping-item, #add-watch-item {
   width: 10%;
   font-size: 1.6rem;
   text-align: center;

@@ -27,18 +27,28 @@ const shoppingList = document.getElementById('shopping-list');
 const newItemInput = document.getElementById('new-shopping-item');
 const addShoppingItem = document.getElementById('add-shopping-item');
 
+const addWatch = document.getElementById('add-watch-item');
+const watchInput = document.getElementById('new-watch-item');
+const watchList = document.getElementById('watch-list');
+const watchSection = document.getElementById('watch-section');
+
 const footerNav = document.getElementById('footer-nav');
 const navChores = document.getElementById('nav-chores');
 const navShopping = document.getElementById('nav-shopping');
+const navWatch = document.getElementById('nav-watch');
+
 
   function hideApps() {
+    choreSection.style.display = 'none';
+    navChores.classList.remove('active');
+
     shoppingSection.style.display = 'none';
     navShopping.classList.remove('active');
     clubcardQRCode.style.display = 'none';
     toggleClubcard.innerHTML = 'Display Clubcard QR Code'
 
-    choreSection.style.display = 'none';
-    navChores.classList.remove('active');
+    watchSection.style.display = 'none';
+    navWatch.classList.remove('active');
   }
 
   function hideNav() {
@@ -59,13 +69,18 @@ const navShopping = document.getElementById('nav-shopping');
     navShopping.classList.add('active');
   }
 
-
+  function showWatchList() {
+    hideApps();
+    loadWatchList();
+    watchSection.style.display = 'block';
+    navWatch.classList.add('active');
+  }
 
 
 // Login
 loginBtn.addEventListener('click', async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: emailInput.value,
+      email: emailInput.value.trim(),
       password: passwordInput.value
     });
 
@@ -89,6 +104,7 @@ loginBtn.addEventListener('click', async () => {
 
       loadChores();
       loadShoppingItems();
+      loadWatchList();
       showChores();
       footerNav.style.display = 'flex';
       logoutBtn.style.display = 'block';
@@ -272,10 +288,81 @@ async function toggleShoppingComplete(id, completed) {
 
 
 
+// Load watch list
+async function loadWatchList() {
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) return;
+
+  const { data: watchItems, error } = await supabase.from('watchlist').select('*').order('inserted_at', { ascending: true });
+
+  if (error) {
+    alert('Error loading watch items');
+    return;
+  }
+
+  // Show app
+  authSection.style.display = 'none';
+  watchSection.style.display = 'block';
+
+  watchList.innerHTML = '';
+  watchItems.forEach((watchItem) => {
+    createWatchItem(watchItem);
+  });
+}
+
+function createWatchItem(watchItem) {
+  const li = document.createElement('li');
+  const div = document.createElement('div');
+    div.setAttribute('class', 'watch-item-text')
+    div.textContent = watchItem.name;
+
+  const bt = document.createElement('div');
+    bt.setAttribute('class', 'watch-item-delete')
+    bt.textContent = '❌';
+    bt.style.cursor = 'pointer';
+    bt.addEventListener('click', () => deleteWatchItem(watchItem.id));
+
+  li.append(div);
+  li.append(bt);
+  watchList.appendChild(li);
+}
+
+
+// Add watch item
+addWatch.addEventListener('click', async () => {
+  const item = watchInput.value.trim();
+  if (!item) return;
+
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  await supabase.from('watchlist').insert([
+    { name: item, user_id: user.id }
+  ]);
+
+  watchInput.value = '';
+  loadWatchList();
+});
+
+// Delete watch item
+async function deleteWatchItem(id) {
+  await supabase
+  .from('watchlist')
+  .delete()
+  .eq('id', id)
+  loadWatchList();
+}
+
+
+
 //Event listeners
 navChores.addEventListener('click', showChores);
 navShopping.addEventListener('click', showShopping);
-
+navWatch.addEventListener('click', showWatchList);
 
 // Auto-login if session exists
 supabase.auth.getSession().then(({ data }) => {
