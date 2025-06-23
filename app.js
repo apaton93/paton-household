@@ -21,6 +21,8 @@ const choreList = document.getElementById('chore-list');
 const choreSection = document.getElementById('chore-section');
 
 const shoppingSection = document.getElementById('shopping-section');
+const toggleClubcard = document.getElementById('toggle-clubcard');
+const clubcardQRCode = document.getElementById('clubcard-qr-code');
 const shoppingList = document.getElementById('shopping-list');
 const newItemInput = document.getElementById('new-shopping-item');
 const addShoppingItem = document.getElementById('add-shopping-item');
@@ -32,6 +34,8 @@ const navShopping = document.getElementById('nav-shopping');
   function hideApps() {
     shoppingSection.style.display = 'none';
     navShopping.classList.remove('active');
+    clubcardQRCode.style.display = 'none';
+    toggleClubcard.innerHTML = 'Display Clubcard QR Code'
 
     choreSection.style.display = 'none';
     navChores.classList.remove('active');
@@ -246,6 +250,16 @@ addShoppingItem.addEventListener('click', async () => {
   loadShoppingItems();
 });
 
+
+toggleClubcard.addEventListener('click', async () => {
+  if (clubcardQRCode.style.display == 'none') {
+    clubcardQRCode.style.display = 'block';
+    toggleClubcard.innerHTML = 'Hide Clubcard QR Code'
+  } else {
+    clubcardQRCode.style.display = 'none';
+    toggleClubcard.innerHTML = 'Display Clubcard QR Code'
+  }
+});
 
 
 async function toggleShoppingComplete(id, completed) {

@@ -96,8 +96,9 @@ button:hover {
 }
 
 #auth-message {
+  text-align: center;
   color: red;
-  margin-top: 0.5rem;
+  margin-top: 0.4rem;
 }
 
 /* Input fields */
@@ -183,9 +184,22 @@ input[type="password"]{
 
 
 
+/*Images*/
 
+#clubcard-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+#toggle-clubcard {
+  margin-bottom: 10px;
+}
 
+#clubcard-qr-code {
+  width: 80%;
+  border: solid 1px black;
+}
 
 
 /* Footer nav */
