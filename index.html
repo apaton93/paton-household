@@ -19,10 +19,13 @@
 
     <header id="app-header">
         <div class="header-left">
-            <img src="/icons/user-icon.png" alt="User" class="user-icon" />
+            <img id="users-icon" alt="User" class="user-icon" />
             <span id="user-name"></span>
+            <button id="logout-btn" style="display: none;">Logout</button>
         </div>
-        <button id="logout-btn" style="display: none;">Logout</button>
+        <div class="header-right">
+          <button id="toggle-theme">⏾</button>
+        </div>
     </header>
 
     <div id="auth-section">

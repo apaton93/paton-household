@@ -6,6 +6,7 @@ const supabase = window.supabase.createClient(
 );
 
 // Elements
+const toggleDarkMode = document.getElementById('toggle-theme');
 const authSection = document.getElementById('auth-section');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
@@ -360,9 +361,29 @@ async function deleteWatchItem(id) {
 
 
 //Event listeners
+toggleDarkMode.addEventListener('click', toggleTheme);
+
 navChores.addEventListener('click', showChores);
 navShopping.addEventListener('click', showShopping);
 navWatch.addEventListener('click', showWatchList);
+
+function toggleTheme() {
+  if (toggleDarkMode.innerHTML == '⏾') {
+    setDarkMode();
+  } else {
+    setLightMode();
+  }
+}
+
+function setDarkMode() {
+  toggleDarkMode.innerHTML = '☀︎';
+  document.body.classList.add('dark');
+}
+
+function setLightMode() {
+  toggleDarkMode.innerHTML = '⏾';
+  document.body.classList.remove('dark');
+}
 
 // Auto-login if session exists
 supabase.auth.getSession().then(({ data }) => {
