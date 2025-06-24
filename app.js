@@ -103,6 +103,7 @@ loginBtn.addEventListener('click', async () => {
         usersName.textContent = profile.forename;
       }
 
+      authSection.style.display = 'none';
       loadChores();
       loadShoppingItems();
       loadWatchList();
@@ -136,10 +137,6 @@ async function loadChores() {
     alert('Error loading chores');
     return;
   }
-
-  // Show app
-  authSection.style.display = 'none';
-  choreSection.style.display = 'block';
 
   choreList.innerHTML = '';
   chores.forEach((chore) => {
@@ -303,10 +300,6 @@ async function loadWatchList() {
     alert('Error loading watch items');
     return;
   }
-
-  // Show app
-  authSection.style.display = 'none';
-  watchSection.style.display = 'block';
 
   watchList.innerHTML = '';
   watchItems.forEach((watchItem) => {
